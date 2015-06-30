@@ -34,8 +34,15 @@ var requestHandler = function(request, response) {
   }else if (request.method === 'POST'){
     headers['Content-Type'] = "text/plain";
     if (request.url === '/classes/messages'){
-      response.writeHead(201, headers);     
-      response.end('good')
+      var message = '';
+      response.writeHead(201, headers);
+      request.on('data', function(chunk){
+        message += chunk;
+      });
+      request.on('end', function(){
+        //console.log(message);
+        response.end(message);
+      })
     } else {
       response.writeHead(404, headers);
       response.end('not found');
