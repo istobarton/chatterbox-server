@@ -2,7 +2,7 @@
 
 var app = {};
 app.init = function(){
-  app.url = "https://api.parse.com/1/classes/chatterbox";
+  app.url = "http://127.0.0.1:3000/classes/messages";
   app.user = document.URL.slice(document.URL.lastIndexOf("username=") + 9);
   app.roomName = '';
   app.roomSet = {};

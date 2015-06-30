@@ -17,11 +17,10 @@ var requestHandler = function(request, response) {
 
   // See the note below about CORS headers.
   var headers = defaultCorsHeaders;
-    headers['Content-Type'] = "application/json";
     console.log('url: ' + request.url)
+    headers['Content-Type'] = "application/json";
 
   if (request.method === 'GET'){
-
     if (request.url !== '/classes/messages'){
       response.writeHead(404, headers);
       response.end();
@@ -32,30 +31,35 @@ var requestHandler = function(request, response) {
     }
 
   }else if (request.method === 'POST'){
-    headers['Content-Type'] = "text/plain";
+    //headers['Content-Type'] = "text/plain";
     if (request.url === '/classes/messages'){
-      var message = '';
+      var data = '';
       response.writeHead(201, headers);
       request.on('data', function(chunk){
-        message += chunk;
+        data += chunk;
       });
       request.on('end', function(){
-        //console.log(message);
-        response.end(message);
-      })
+        messages.push(JSON.parse(data))
+        //var message = JSON.parse(data);
+        //console.log(typeof message);
+        response.end(data);
+      });
     } else {
       response.writeHead(404, headers);
       response.end('not found');
     }
+  } else if (request.method === 'OPTIONS'){
+      response.writeHead(200, headers);
+      response.end(JSON.stringify(headers));
   }
 
 };
 
 var defaultCorsHeaders = {
-  "access-control-allow-origin": "*",
-  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "access-control-allow-headers": "content-type, accept",
-  "access-control-max-age": 10 // Seconds.
+  "Access-Control-Allow-Origin": "*",
+  "Cccess-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "X-Parse-Application-Id, X-Parse-REST-API-Key, content-type, accept",
+  "Access-Control-Max-age": 10 // Seconds.
 };
 
 exports.requestHandler = requestHandler;
