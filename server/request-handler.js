@@ -12,6 +12,17 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 var messages = []
+
+var fs = require('../client/bower_components')
+
+// fs.mkdir("/lib", 0777, function(err)){
+//     if(err){
+//     console.log(err);
+//   } else {
+//     console.log('Directory created');
+//   }
+// }
+
 var requestHandler = function(request, response) {
   console.log("Serving request type " + request.method + " for url " + request.url);
 
@@ -25,7 +36,10 @@ var requestHandler = function(request, response) {
       response.writeHead(200, headers);
       response.end(JSON.stringify({results: messages}));
     } else {
+      headers['Content-Type'] = "text/html";
       response.writeHead(404, headers);
+      //response.write('<!doctype html><html><head><title>404</title></head><body>404: Resource Not Found</body></html>');
+      response.write('<>');
       response.end();
     }
 
