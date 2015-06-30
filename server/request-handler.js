@@ -21,17 +21,16 @@ var requestHandler = function(request, response) {
     headers['Content-Type'] = "application/json";
 
   if (request.method === 'GET'){
-    if (request.url !== '/classes/messages' || request.url !== '/classes/room'){
-      response.writeHead(404, headers);
-      response.end();
-
-    } else {
+    if (request.url === '/classes/messages' || request.url ==='/classes/room1'){
       response.writeHead(200, headers);
       response.end(JSON.stringify({results: messages}));
+    } else {
+      response.writeHead(404, headers);
+      response.end();
     }
 
   }else if (request.method === 'POST'){
-    if (request.url === '/classes/messages'){
+    if (request.url === '/classes/messages' || request.url === '/classes/room1'){
       var data = '';
       response.writeHead(201, headers);
       request.on('data', function(chunk){
