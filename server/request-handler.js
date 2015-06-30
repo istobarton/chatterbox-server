@@ -21,7 +21,7 @@ var requestHandler = function(request, response) {
     headers['Content-Type'] = "application/json";
 
   if (request.method === 'GET'){
-    if (request.url !== '/classes/messages'){
+    if (request.url !== '/classes/messages' || request.url !== '/classes/room'){
       response.writeHead(404, headers);
       response.end();
 
@@ -31,7 +31,6 @@ var requestHandler = function(request, response) {
     }
 
   }else if (request.method === 'POST'){
-    //headers['Content-Type'] = "text/plain";
     if (request.url === '/classes/messages'){
       var data = '';
       response.writeHead(201, headers);
@@ -40,8 +39,6 @@ var requestHandler = function(request, response) {
       });
       request.on('end', function(){
         messages.push(JSON.parse(data))
-        //var message = JSON.parse(data);
-        //console.log(typeof message);
         response.end(data);
       });
     } else {

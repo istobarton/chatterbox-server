@@ -108,12 +108,12 @@ app.handleSubmit = function(){
 };
 
 app.messageToString = function(message){
-  var date = new Date(message['createdAt']);
+  //var date = new Date(message['createdAt']);
   var string = '';
   string += message['username'] + ': ' + message['text'];
-  string += ' @ ' + date.toLocaleString();
+  //string += ' @ ' + date.toLocaleString();
   return string;
-}
+};
 
 app.updateDOM = function(results){
   app.clearMessages();
